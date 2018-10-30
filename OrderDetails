@@ -1,0 +1,107 @@
+package com.cybage.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
+
+
+/**
+ * The persistent class for the order_details database table.
+ * 
+ */
+@Entity
+@Table(name="order_details")
+@NamedQuery(name="OrderDetail.findAll", query="SELECT o FROM OrderDetail o")
+public class OrderDetail implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private int orderId;
+
+	@Temporal(TemporalType.DATE)
+	//@Column(nullable=false)
+	private Date date;
+
+	@Column( length=100)
+	private String deliveryAdd;
+
+	@Column( precision=10)
+	private BigDecimal payment;
+
+	
+	@Column(nullable=false)
+	private int quantity;
+
+	//bi-directional one-to-one association to ProductDetail
+	@OneToOne
+	@JoinColumn(name="OrderId", insertable=false, updatable=false)
+	private ProductDetail productDetail;
+
+	//bi-directional one-to-one association to UserDetail
+	@OneToOne
+	@JoinColumn(name="OrderId",insertable=false, updatable=false)
+	private UserDetail userDetail;
+
+	public OrderDetail() {
+	}
+
+	public int getOrderId() {
+		return this.orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+	public Date getDate() {
+		return this.date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getDeliveryAdd() {
+		return this.deliveryAdd;
+	}
+
+	public void setDeliveryAdd(String deliveryAdd) {
+		this.deliveryAdd = deliveryAdd;
+	}
+
+	public BigDecimal getPayment() {
+		return this.payment;
+	}
+
+	public void setPayment(BigDecimal payment) {
+		this.payment = payment;
+	}
+
+	public int getQuantity() {
+		return this.quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public ProductDetail getProductDetail() {
+		return this.productDetail;
+	}
+
+	public void setProductDetail(ProductDetail productDetail) {
+		this.productDetail = productDetail;
+	}
+
+	public UserDetail getUserDetail() {
+		return this.userDetail;
+	}
+
+	public void setUserDetail(UserDetail userDetail) {
+		this.userDetail = userDetail;
+	}
+
+}
